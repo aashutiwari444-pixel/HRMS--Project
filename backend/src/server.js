@@ -1,0 +1,14 @@
+import express from 'express';
+import cors from 'cors';
+import config from './config.js';
+import auth from './routes/auth.js';
+import employees from './routes/employees.js';
+import leave from './routes/leave.js';
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.get('/api/health', (req, res) => res.json({ ok: true, mock: config.useMock }));
+app.use('/api/auth', auth);
+app.use('/api/employees', employees);
+app.use('/api/leave', leave);
+app.listen(config.port, () => console.log(`HRMS API on :${config.port} (mock data: ${config.useMock})`));
